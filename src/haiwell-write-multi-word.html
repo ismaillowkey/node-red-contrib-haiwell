@@ -1,0 +1,182 @@
+<!--
+ Copyright (c) since the year 2016 Klaus Landsdorf (http://plus4nodered.com/)
+ Copyright 2016 - Jason D. Harper, Argonne National Laboratory
+ Copyright 2015,2016 - Mika Karaila, Valmet Automation Inc.
+ Copyright 2013, 2016 IBM Corp. (node-red)
+ All rights reserved.
+ node-red-contrib-modbus
+
+ @author <a href="mailto:klaus.landsdorf@bianco-royal.de">Klaus Landsdorf</a> (Bianco Royal)
+-->
+<script type="text/javascript">
+  RED.nodes.registerType('haiwell-write-multi-word', {
+    category: 'Haiwell Modbus',
+    color: '#E9967A',
+    defaults: {
+      name: {value: ''},
+      showStatusActivities: {value: false},
+      showErrors: {value: false},
+      showWarnings: {value: true},
+      unitid: {value: ''},
+      dataType: {value: 'MHoldingRegisters', required: true},
+      haiwellComponent: {value: 'V', required: true},
+      endianness: {value: 'CDAB', required: true},
+      targetType: {value: 'int16', required: true},
+      adr: {value: '', required: true, validate: RED.validators.number()},
+      quantity: {value: '', required: true, validate: RED.validators.number()},
+      server: {type: 'modbus-client', required: true},
+      emptyMsgOnFail: {value: false},
+      keepMsgProperties: {value: false},
+      delayOnStart: {value: false},
+      startDelayTime: {value: ''}
+    },
+    inputs: 1,
+    outputs: 2,
+    align: "right",
+    icon: 'modbus.png',
+    paletteLabel: 'Haiwell Write Multi Word',
+    label: function () {
+      return this.name || 'Haiwell Write Multi Word'
+    },
+    oneditprepare: function () {
+      let tabs = RED.tabs.create({
+        id: "node-input-modbus-tabs",
+        onchange: function (tab) {
+          $("#node-input-tabs-content").children().hide()
+          $("#" + tab.id).show()
+        }
+      })
+
+      tabs.addTab({
+        id: "modbus-settings-tab",
+        label: "Settings"
+      })
+
+      tabs.addTab({
+        id: "modbus-options-tab",
+        label: "Optionals"
+      })
+
+      if (this.delayOnStart) {
+        $('#node-delay').show()
+      }
+      else {
+        $('#node-delay').hide()
+        $('#node-input-delayOnStart').prop('checked', false)
+      }
+
+      $('#node-input-delayOnStart').change(function () {
+        if ($(this).is(':checked')) {
+          $('#node-delay').show()
+        } else {
+          $('#node-delay').hide()
+        }
+      })
+    }
+  })
+</script>
+
+<script type="text/x-red" data-template-name="haiwell-write-multi-word">
+    <div class="form-row">
+        <ul style="background: #fff; min-width: 600px; margin-bottom: 20px;" id="node-input-modbus-tabs"></ul>
+    </div>
+    <div id="node-input-tabs-content" style="min-height: 170px;">
+        <div id="modbus-settings-tab" style="display:none">
+            <div class="form-row">
+                <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+                <input type="text" id="node-input-name" placeholder="Name">
+            </div>
+            <div class="form-row" style="display:none;">
+                <label for="node-input-unitid"><i class="icon-bookmark"></i> <span data-i18n="modbus-contrib.label.unitId"></span></label>
+                <input type="text" id="node-input-unitid">
+            </div>
+            <div class="form-row" style="display:none;">
+                <label for="node-input-dataType"><i class="icon-list"></i> <span data-i18n="modbus-contrib.label.functioncode"></span></label>
+                <select id="node-input-dataType">
+                    <option value="MHoldingRegisters">FC 16: Preset Multiple Registers</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="node-input-haiwellComponent"><i class="icon-list"></i> Haiwell Component</label>
+                <select id="node-input-haiwellComponent">
+                    <option value="CR">CR</option>
+                    <option value="AQ">AQ</option>
+                    <option value="V">V</option>
+                    <option value="TV">TV</option>
+                    <option value="CV">CV</option>
+                    <option value="SV">SV</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="node-input-adr"><i class="icon-home"></i> <span>Address</span></label>
+                <input type="text" id="node-input-adr" placeholder="e.g., 0">
+            </div>
+            <div class="form-row">
+                <label for="node-input-quantity"><i class="icon-bookmark"></i> <span>Quantity (Array Length)</span></label>
+                <input type="text" id="node-input-quantity" placeholder="e.g., 3">
+            </div>
+            <div class="form-row">
+                <label for="node-input-endianness"><i class="fa fa-random"></i> Endianness</label>
+                <select id="node-input-endianness" style="width: 260px;">
+                    <option value="ABCD">ABCD (Big Endian)</option>
+                    <option value="CDAB">CDAB (Little Endian / Word Swap)</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="node-input-targetType"><i class="fa fa-cogs"></i> Input Type</label>
+                <select id="node-input-targetType">
+                    <option value="int16">int16</option>
+                    <option value="uint16">uint16</option>
+                    <option value="int32">int32</option>
+                    <option value="uint32">uint32</option>
+                    <option value="int64">int64</option>
+                    <option value="uint64">uint64</option>
+                    <option value="float32">float32</option>
+                    <option value="double64">double64</option>
+                </select>
+            </div>
+            <div class="form-row" id="node-delayonstart">
+                <label for="node-input-delayOnStart" style="width:160px">
+                <i class="fa fa-power-off"></i> <span>Delay on Start</span></label>
+                <input type="checkbox" id="node-input-delayOnStart" style="width:40px">
+            </div>
+            <div class="form-row" id="node-delay">
+                <label for="node-input-startDelayTime"><i class="fa fa-clock-o"></i> <span>Start Delay Time</span></label>
+                <input type="text" id="node-input-startDelayTime" placeholder="10" style="width:80px">
+            </div>
+            <div class="form-row">
+                <label for="node-input-server"><i class="icon-globe"></i> <span>Server</span></label>
+                <input type="text" id="node-input-server">
+            </div>
+        </div>
+        <div id="modbus-options-tab" style="display:none">
+            <div class="form-row">
+                <label style="min-width:190px" for="node-input-emptyMsgOnFail"><i class="fa fa-th"></i> <span>Empty msg on fail</span></label>
+                <input type="checkbox" id="node-input-emptyMsgOnFail" style="max-width:30px">
+            </div>
+            <div class="form-row">
+                <label style="min-width:190px" for="node-input-keepMsgProperties"><i class="fa fa-th"></i> <span>Keep Msg Properties</span></label>
+                <input type="checkbox" id="node-input-keepMsgProperties" style="max-width:30px">
+            </div>
+            <div class="form-row">
+                <label style="min-width:190px" for="node-input-showStatusActivities"><i class="fa fa-th"></i> <span>Show Activities</span></label>
+                <input type="checkbox" id="node-input-showStatusActivities" style="max-width:30px">
+            </div>
+            <div class="form-row">
+                <label style="min-width:190px" for="node-input-showErrors"><i class="fa fa-th"></i> <span>Show Errors</span></label>
+                <input type="checkbox" id="node-input-showErrors" style="max-width:30px">
+            </div>
+            <div class="form-row">
+                <label style="min-width:190px" for="node-input-showWarnings"><i class="fa fa-th"></i> <span>Show Warnings</span></label>
+                <input type="checkbox" checked id="node-input-showWarnings" style="max-width:30px">
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="haiwell-write-multi-word">
+    <p>Haiwell Modbus TCP/Serial write multiple words node.</p>
+    <p>Connects to a Modbus TCP or serial to write an array of numeric values into word registers.</p>
+    <p><b>Note:</b> The input format should be an array of numbers in <code>msg.payload</code> (e.g. <code>msg.payload = [1.1, 2.2, 3.3]</code>).</p>
+    <p>The node automatically converts them into the necessary 16-bit register array, calculates the correct Haiwell offset based on the component, and writes it to the PLC.</p>
+</script>

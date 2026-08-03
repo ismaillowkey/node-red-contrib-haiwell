@@ -1,0 +1,139 @@
+{
+  "name": "@ismaillowkey/node-red-contrib-haiwell",
+  "version": "0.5.0",
+  "private": false,
+  "description": "Modbus TCP and Serial nodes customized for Haiwell devices. Forked from node-red-contrib-modbus.",
+  "dependencies": {
+    "@open-p4nr/modbus-serial": "https://dl.cloudsmith.io/public/iniationware-gmbh/plus4nodered/npm/open-p4nr/modbus-serial/8.1.0/modbus-serial-8.1.0.tgz",
+    "@xstate/fsm": "~2.1.0",
+    "bson": "~6.7.0",
+    "debug": "~4.3.4",
+    "jsmodbus": "~4.0.10",
+    "line-by-line": "~0.1.6",
+    "source-map-support": "~0.5.21",
+    "underscore": "~1.13.6"
+  },
+  "optionalDependencies": {
+    "@serialport/list": "~12.0.0",
+    "serialport": "^12.0.0"
+  },
+  "keywords": [
+    "node-red",
+    "plusfornodered",
+    "modbus",
+    "automation",
+    "biancoroyal"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/biancoroyal/node-red-contrib-modbus.git"
+  },
+  "node-red": {
+    "version": ">=3",
+    "nodes": {
+      "Modbus-Client": "modbus/modbus-client.js",
+      "Modbus-Read": "modbus/modbus-read.js",
+      "Modbus-Write": "modbus/modbus-write.js",
+      "Haiwell-Read-Word": "modbus/haiwell-read-word.js",
+      "Haiwell-Read-Bit": "modbus/haiwell-read-bit.js",
+      "Haiwell-Write-Single-Word": "modbus/haiwell-write-single-word.js",
+      "Haiwell-Write-Multi-Word": "modbus/haiwell-write-multi-word.js",
+      "Haiwell-Write-Single-Bit": "modbus/haiwell-write-single-bit.js",
+      "Haiwell-Write-Multi-Bit": "modbus/haiwell-write-multi-bit.js",
+      "Modbus-IO-Config": "modbus/modbus-io-config.js"
+    }
+  },
+  "author": "Ismail Lookey (Original by Klaus Landsdorf)",
+  "license": "BSD-3-Clause",
+  "main": "node",
+  "files": [
+    "docs",
+    "modbus",
+    "extras/argumentMaps/defaults",
+    "extras/argumentMaps/ArgumentMaps.md",
+    ".npmrc"
+  ],
+  "bugs": {
+    "url": "https://github.com/biancoroyal/node-red-contrib-modbus/issues/"
+  },
+  "homepage": "https://plus4nodered.com/",
+  "scripts": {
+    "changelog": "npm run rewrite-changelog",
+    "test": "standard --fix && mocha ./test --parallel --recursive --reporter dot --timeout 5000",
+    "test:e2e": "standard --fix && mocha './test/e2e/*-test.js' --parallel --recursive --timeout 5000",
+    "test:units": "standard --fix && mocha './test/units/*-test.js' --parallel --recursive --timeout 5000",
+    "test:core": "standard --fix && mocha './test/core/*-test.js' --parallel --recursive --timeout 5000",
+    "test-nyc": "nyc --reporter=html --reporter=text mocha --recursive --timeout=5000",
+    "test-npx": "npx nyc@latest --reporter=html --reporter=text mocha --timeout=5000",
+    "test-with-coverage": "nyc --reporter=lcovonly mocha --recursive --timeout 5000 -R spec && cat ./coverage/lcov.info | codacy-coverage --token $CODACY_COVERAGE_TOKEN && rm -rf ./coverage",
+    "coverage": "standard --fix && gulp build && npm test && nyc --reporter=lcov --reporter=text mocha --recursive --reporter dot --timeout 5000",
+    "coverage-nyc": "nyc report --reporter=text-lcov | coveralls",
+    "build": "standard --fix && gulp",
+    "prepublishOnly": "standard --fix && npm run build && npm run rewrite-changelog && npm test && mocha test --recursive --timeout 5000 --reporter dot && nyc mocha --recursive --timeout 5000",
+    "ci-publish": "ci-publish",
+    "release": "standard-version -a",
+    "release:beta": "standard-version --prerelease beta",
+    "release:alpha": "standard-version --prerelease alpha",
+    "rewrite-changelog": "gulp changelog",
+    "clean": "gulp clean",
+    "dev-link": "npm i && npm run build && npm link",
+    "dev-unlink": "npm unlink node-red-contrib-modbus -g",
+    "dev-link-local": "npm run build && npm link"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.5",
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@node-red/nodes": "^3.1.9",
+    "codacy-coverage": "^3.4.0",
+    "conventional-changelog-cli": "^5.0.0",
+    "coveralls": "^3.1.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-conventional-changelog": "^5.0.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-jsdoc3": "^3.0.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-sequence": "^1.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "jasmine-node": "^3.0.0",
+    "js-beautify": "^1.15.1",
+    "mocha": "^10.4.0",
+    "nock": "^13.5.4",
+    "node-red": "^3.1.9",
+    "node-red-contrib-modbus-flex-server": "^1.0.0",
+    "node-red-node-test-helper": "^0.3.4",
+    "nyc": "^15.1.0",
+    "pump": "^3.0.0",
+    "should": "^13.2.3",
+    "sinon": "^17.0.1",
+    "standard": "^17.1.0",
+    "standard-version": "^9.5.0",
+    "supertest": "^7.0.0",
+    "uglify-js": "^3.17.4",
+    "uglify-js-harmony": "^2.7.7",
+    "when": "^3.7.8"
+  },
+  "directories": {},
+  "standard": {
+    "ignore": [
+      "code/",
+      "node_modules/",
+      "examples/",
+      "modbus/",
+      "docs",
+      "test",
+      "extras"
+    ]
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/node-red-contrib-modbus"
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+}
