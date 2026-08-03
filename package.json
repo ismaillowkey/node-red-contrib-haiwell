@@ -1,6 +1,6 @@
 {
   "name": "@ismaillowkey/node-red-contrib-haiwell",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": false,
   "description": "Modbus TCP and Serial nodes customized for Haiwell devices. Forked from node-red-contrib-modbus.",
   "dependencies": {
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/biancoroyal/node-red-contrib-modbus.git"
+    "url": "git+https://github.com/ismaillowkey/node-red-contrib-haiwell.git"
   },
   "node-red": {
     "version": ">=3",
@@ -53,13 +53,13 @@
     "docs",
     "modbus",
     "extras/argumentMaps/defaults",
-    "extras/argumentMaps/ArgumentMaps.md",
-    ".npmrc"
+    "extras/argumentMaps/read",
+    "extras/argumentMaps/write"
   ],
   "bugs": {
-    "url": "https://github.com/biancoroyal/node-red-contrib-modbus/issues/"
+    "url": "https://github.com/ismaillowkey/node-red-contrib-haiwell/issues"
   },
-  "homepage": "https://plus4nodered.com/",
+  "homepage": "https://github.com/ismaillowkey/node-red-contrib-haiwell#readme",
   "scripts": {
     "changelog": "npm run rewrite-changelog",
     "test": "standard --fix && mocha ./test --parallel --recursive --reporter dot --timeout 5000",
@@ -72,7 +72,7 @@
     "coverage": "standard --fix && gulp build && npm test && nyc --reporter=lcov --reporter=text mocha --recursive --reporter dot --timeout 5000",
     "coverage-nyc": "nyc report --reporter=text-lcov | coveralls",
     "build": "standard --fix && gulp",
-    "prepublishOnly": "standard --fix && npm run build && npm run rewrite-changelog && npm test && mocha test --recursive --timeout 5000 --reporter dot && nyc mocha --recursive --timeout 5000",
+    "prepublishOnly": "npm run build",
     "ci-publish": "ci-publish",
     "release": "standard-version -a",
     "release:beta": "standard-version --prerelease beta",
