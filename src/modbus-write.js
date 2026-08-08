@@ -192,5 +192,5 @@ module.exports = function (RED) {
     }
   }
 
-  RED.nodes.registerType('modbus-write', ModbusWrite)
+  RED.nodes.registerType('haiwell-modbus-write', ModbusWrite)
 }

@@ -728,7 +728,7 @@ module.exports = function (RED) {
     }
   }
 
-  RED.nodes.registerType('modbus-client', ModbusClientNode)
+  RED.nodes.registerType('haiwell-modbus-client', ModbusClientNode)
 
   RED.httpAdmin.get('/modbus/serial/ports', RED.auth.needsPermission('serial.read'), function (req, res) {
     const SerialPort = require('serialport')

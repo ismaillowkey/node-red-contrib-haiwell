@@ -24,7 +24,7 @@
       targetType: {value: 'int16', required: true},
       adr: {value: '', required: true, validate: RED.validators.number()},
       quantity: {value: '', required: true, validate: RED.validators.number()},
-      server: {type: 'modbus-client', required: true},
+      server: {type: 'haiwell-modbus-client', required: true},
       emptyMsgOnFail: {value: false},
       keepMsgProperties: {value: false},
       delayOnStart: {value: false},

@@ -9,7 +9,7 @@
  @author <a href="mailto:klaus.landsdorf@bianco-royal.de">Klaus Landsdorf</a> (Bianco Royal)
 -->
 <script type="text/javascript">
-  RED.nodes.registerType('modbus-read', {
+  RED.nodes.registerType('haiwell-modbus-read', {
     category: 'Haiwell Modbus',
     color: '#E9967A',
     defaults: {
@@ -35,9 +35,9 @@
       },
       delayOnStart: {value: false},
       startDelayTime: {value: ''},
-      server: {type: 'modbus-client', required: true},
+      server: {type: 'haiwell-modbus-client', required: true},
       useIOFile: {value: false},
-      ioFile: {value: '', type: 'modbus-io-config', required: false},
+      ioFile: {value: '', type: 'haiwell-modbus-io-config', required: false},
       useIOForPayload: {value: false},
       emptyMsgOnFail: {value: false}
     },
@@ -102,7 +102,7 @@
     },
     button: {
       onclick: function () {
-        let label = (this.name || 'modbus-read').replace(/&/g, '&amp').replace(/</g, '&lt').replace(/>/g, '&gt')
+        let label = (this.name || 'haiwell-modbus-read').replace(/&/g, '&amp').replace(/</g, '&lt').replace(/>/g, '&gt')
         let node = this
 
         $.ajax({
@@ -133,7 +133,7 @@
   })
 </script>
 
-<script type="text/x-red" data-template-name="modbus-read">
+<script type="text/x-red" data-template-name="haiwell-modbus-read">
     <div class="form-row">
         <ul style="background: #fff; min-width: 600px; margin-bottom: 20px;" id="node-input-modbus-tabs"></ul>
     </div>
@@ -269,7 +269,7 @@
 </script>
 
 
-<script type="text/x-red" data-help-name="modbus-read">
+<script type="text/x-red" data-help-name="haiwell-modbus-read">
     <p><strong>
         If you have more than 10 nodes on one communication configuration,
         use the Modbus-Flex-Getter or think about multiple connections to your Modbus device, please!

@@ -86,5 +86,5 @@ module.exports = function (RED) {
     })
   }
 
-  RED.nodes.registerType('modbus-io-config', ModbusIOConfigNode)
+  RED.nodes.registerType('haiwell-modbus-io-config', ModbusIOConfigNode)
 }

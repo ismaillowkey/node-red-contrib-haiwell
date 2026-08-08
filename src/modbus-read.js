@@ -338,7 +338,7 @@ module.exports = function (RED) {
     modbusClient.registerForModbus(node)
   }
 
-  RED.nodes.registerType('modbus-read', ModbusRead)
+  RED.nodes.registerType('haiwell-modbus-read', ModbusRead)
 
   RED.httpAdmin.post('/modbus/read/inject/:id', RED.auth.needsPermission('modbus.inject.write'), function (req, res) {
     const node = RED.nodes.getNode(req.params.id)

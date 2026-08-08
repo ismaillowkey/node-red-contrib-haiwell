@@ -1,6 +1,6 @@
 {
   "name": "@ismaillowkey/node-red-contrib-haiwell",
-  "version": "0.5.1",
+  "version": "0.6.1",
   "private": false,
   "description": "Modbus TCP and Serial nodes customized for Haiwell devices. Forked from node-red-contrib-modbus.",
   "dependencies": {
@@ -34,16 +34,16 @@
   "node-red": {
     "version": ">=3",
     "nodes": {
-      "Modbus-Client": "modbus/modbus-client.js",
-      "Modbus-Read": "modbus/modbus-read.js",
-      "Modbus-Write": "modbus/modbus-write.js",
+      "Haiwell-Modbus-Client": "modbus/modbus-client.js",
+      "Haiwell-Modbus-Read": "modbus/modbus-read.js",
+      "Haiwell-Modbus-Write": "modbus/modbus-write.js",
       "Haiwell-Read-Word": "modbus/haiwell-read-word.js",
       "Haiwell-Read-Bit": "modbus/haiwell-read-bit.js",
       "Haiwell-Write-Single-Word": "modbus/haiwell-write-single-word.js",
       "Haiwell-Write-Multi-Word": "modbus/haiwell-write-multi-word.js",
       "Haiwell-Write-Single-Bit": "modbus/haiwell-write-single-bit.js",
       "Haiwell-Write-Multi-Bit": "modbus/haiwell-write-multi-bit.js",
-      "Modbus-IO-Config": "modbus/modbus-io-config.js"
+      "Haiwell-Modbus-IO-Config": "modbus/modbus-io-config.js"
     }
   },
   "author": "Ismail Lookey (Original by Klaus Landsdorf)",

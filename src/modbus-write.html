@@ -8,7 +8,7 @@
  @author <a href="mailto:klaus.landsdorf@bianco-royal.de">Klaus Landsdorf</a> (Bianco Royal)
 -->
 <script type="text/javascript">
-  RED.nodes.registerType('modbus-write', {
+  RED.nodes.registerType('haiwell-modbus-write', {
     category: 'Haiwell Modbus',
     color: '#E9967A',
     defaults: {
@@ -20,7 +20,7 @@
       dataType: {value: '', required: true},
       adr: {value: '', required: true, validate: RED.validators.number()},
       quantity: {value: '', required: true, validate: RED.validators.number()},
-      server: {type: 'modbus-client', required: true},
+      server: {type: 'haiwell-modbus-client', required: true},
       emptyMsgOnFail: {value: false},
       keepMsgProperties: {value: false},
       delayOnStart: {value: false},
@@ -100,7 +100,7 @@
 </script>
 
 
-<script type="text/x-red" data-template-name="modbus-write">
+<script type="text/x-red" data-template-name="haiwell-modbus-write">
     <div class="form-row">
         <ul style="background: #fff; min-width: 600px; margin-bottom: 20px;" id="node-input-modbus-tabs"></ul>
     </div>
@@ -204,7 +204,7 @@
 </script>
 
 
-<script type="text/x-red" data-help-name="modbus-write">
+<script type="text/x-red" data-help-name="haiwell-modbus-write">
     <p><strong>
         If you have more than 10 nodes on one communication configuration,
         use the Modbus-Flex-Writer or think about multiple connections to your Modbus device, please!
